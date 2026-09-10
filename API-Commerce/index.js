@@ -4,11 +4,18 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 8000
 
+// importing routes
+const categoryRoute = require('./routes/categoryRoute')
+
 // listen to the port
 app.listen(port, () => {
     console.log(`Server started successfully on port ${port}`)
 })
 
-app.get('/welcome', (req, res) => {
-    res.send('Welcome to Express JS to learn the RESTAPI');
-})
+// app.get('/welcome', (req, res) => {
+//     res.send('Welcome to Express JS to learn the RESTAPI');
+// })
+
+// using routes
+// app.use('', categoryRoute)
+app.use('/api', categoryRoute)
