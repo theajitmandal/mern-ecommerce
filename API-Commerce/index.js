@@ -1,21 +1,28 @@
-const express = require('express')
-require('dotenv').config()
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
+
+import categoryRoute from "./routes/categoryRoute.js";
+
+import bodyParser from "body-parser"
+
+
+dotenv.config();
 
 const app = express()
 const port = process.env.PORT || 8000
 
-// importing routes
-const categoryRoute = require('./routes/categoryRoute')
+// db connection
+connectDB();
 
+app.use(bodyParser.json())
+
+app.use(express.json());
 // listen to the port
 app.listen(port, () => {
     console.log(`Server started successfully on port ${port}`)
 })
 
-// app.get('/welcome', (req, res) => {
-//     res.send('Welcome to Express JS to learn the RESTAPI');
-// })
-
 // using routes
-// app.use('', categoryRoute)
-app.use('/api', categoryRoute)
+app.use("/api", categoryRoute);
+
