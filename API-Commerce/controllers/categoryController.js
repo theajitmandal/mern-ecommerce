@@ -1,6 +1,6 @@
-export const helloFunction = (req, res) => {
-    res.send('This is a hello function controller')
-}
+// export const helloFunction = (req, res) => {
+//     res.send('This is a hello function controller')
+// }
 
 import Category from "../model/categoryModel.js"
 
@@ -12,6 +12,7 @@ import Category from "../model/categoryModel.js"
 //     }
 // };
 
+// to post category
 export const createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
@@ -27,4 +28,20 @@ export const createCategory = async (req, res) => {
     });
   }
 };
+
+// to show all category
+export const showCategory = async (req, res) => {
+  try{
+    const category = await Category.find()
+    if(!category){
+      return res.status(400).json({error: 'Something went wrong'})
+    }
+    res.send(category)
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}
 
