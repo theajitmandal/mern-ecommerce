@@ -1,6 +1,6 @@
-// export const helloFunction = (req, res) => {
-//     res.send('This is a hello function controller')
-// }
+export const helloFunction = (req, res) => {
+  res.send('This is a hello function controller')
+}
 
 import Category from "../model/categoryModel.js"
 
@@ -31,10 +31,10 @@ export const createCategory = async (req, res) => {
 
 // to show all category
 export const showCategory = async (req, res) => {
-  try{
+  try {
     const category = await Category.find()
-    if(!category){
-      return res.status(400).json({error: 'Something went wrong'})
+    if (!category) {
+      return res.status(400).json({ error: 'Something went wrong' })
     }
     res.send(category)
 
@@ -43,5 +43,30 @@ export const showCategory = async (req, res) => {
       message: error.message,
     });
   }
+}
+
+// to show category details
+export const categoryDetails = async (req, res) => {
+  const category = await Category.findById(req.params.id)
+  if (!category) {
+    return res.status(400).json({ error: 'Something went wrong' })
+  }
+  res.send(category)
+}
+
+// to update category
+export const updateCategory = async (req, res) => {
+  const category = await Category.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+      description: req.body.description
+    },
+    { new: true }
+  )
+  if (!category) {
+    return res.status(400).json({ error: 'Something went wrong' })
+  }
+  res.send(category)
 }
 
