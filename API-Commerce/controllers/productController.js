@@ -16,3 +16,5 @@ export const createProduct = (req, res) => {
     product: req.body,
   });
 };
+
+export const createProduct = async (req, res) => { try { const { name, price, description, category, stock } = req.body; const product = await Product.create({ name, price, description, category, stock, }); res.status(201).json(product); } catch (error) { res.status(500).json({ message: error.message, }); } };
