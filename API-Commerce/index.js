@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import categoryRoute from "./routes/categoryRoute.js";
 
 import bodyParser from "body-parser"
+import morgan from "morgan";
 
 
 dotenv.config();
@@ -15,7 +16,9 @@ const port = process.env.PORT || 8000
 // db connection
 connectDB();
 
+// middleware
 app.use(bodyParser.json())
+app.use(morgan('dev'))
 
 app.use(express.json());
 // listen to the port

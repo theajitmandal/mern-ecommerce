@@ -72,16 +72,22 @@ export const updateCategory = async (req, res) => {
 
 // to delete category
 export const deleteCategory = (req, res) => {
-  Category.findByIdAndRemove(req.params.id).then(category => {
-    if(!category){
-      return res.staus(403).json({error: 'Category Not Found'})
-    } else {
-      return res.status(200).json({message: 'Category Deleted'})
-    }
+  Category.findByIdAndDelete(req.params.id)
+    .then((category) => {
+      if (!category) {
+        return res.status(404).json({
+          error: "Category Not Found",
+        });
+      }
 
-  })
-  .catch(err => {
-    return res.status(400).json({error: err})
-  })
-}
+      return res.status(200).json({
+        message: "Category Deleted",
+      });
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        error: err.message,
+      });
+    });
+};
 
