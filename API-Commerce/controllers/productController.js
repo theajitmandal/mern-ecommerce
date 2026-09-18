@@ -20,3 +20,19 @@ export const postProduct = async (req, res) => {
     });
   }
 }
+
+// to show all product
+export const showProduct = async (req, res) => {
+  try {
+    const product = await Product.find()
+    if (!product) {
+      return res.status(400).json({ error: 'Something went wrong' })
+    }
+    res.send(product)
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}
