@@ -24,7 +24,7 @@ export const postProduct = async (req, res) => {
 // to show all product
 export const showProduct = async (req, res) => {
   try {
-    const product = await Product.find()
+    const product = await Product.find().populate('category')
     if (!product) {
       return res.status(400).json({ error: 'Something went wrong' })
     }
@@ -35,4 +35,14 @@ export const showProduct = async (req, res) => {
       message: error.message,
     });
   }
+}
+
+// to fetch single product
+// to show category details
+export const productDetails = async (req, res) => {
+  const product = await Product.findById(req.params.id).populate('category')
+  if (!product) {
+    return res.status(400).json({ error: 'Something went wrong' })
+  }
+  res.send(product)
 }
