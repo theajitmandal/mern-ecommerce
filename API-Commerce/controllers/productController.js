@@ -46,3 +46,39 @@ export const productDetails = async (req, res) => {
   }
   res.send(product)
 }
+
+// to update product
+// export const updateCategory = async (req, res) => {
+//   const category = await Category.findByIdAndUpdate(
+//     req.params.id,
+//     {
+//       name: req.body.name,
+//       description: req.body.description
+//     },
+//     { new: true }
+//   )
+//   if (!category) {
+//     return res.status(400).json({ error: 'Something went wrong' })
+//   }
+//   res.send(category)
+// }
+
+export const updateProduct = async(req, res) => {
+  const product = await Product.findByIdAndUpdate(
+    req.params.id,
+    {
+      productName: req.body.productName,
+      productPrice: req.body.productPrice,
+      countInStock: req.body.countInStock,
+      productDescription: req.body.productDescription,
+      productImage: req.body.productImage,
+      productRating: req.body.productRating,
+      category: req.body.category
+    },
+    {new: true}
+  )
+  if(!product){
+    return res.status(400).json({error: 'Something went wrong'})
+  }
+  res.send(product)
+}
