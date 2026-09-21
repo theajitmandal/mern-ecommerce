@@ -82,3 +82,24 @@ export const updateProduct = async(req, res) => {
   }
   res.send(product)
 }
+
+// to delete product
+export const deleteProduct= (req, res) => {
+  Product.findByIdAndDelete(req.params.id)
+    .then((product) => {
+      if (!product) {
+        return res.status(404).json({
+          error: "Product Not Found",
+        });
+      }
+
+      return res.status(200).json({
+        message: "Product Deleted",
+      });
+    })
+    .catch((err) => {
+      return res.status(400).json({
+        error: err.message,
+      });
+    });
+};
