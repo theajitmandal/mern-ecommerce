@@ -19,6 +19,7 @@ connectDB();
 // middleware
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+app.use('/public/uploads', express.static('public/uploads')) // to see static files in the browser
 
 app.use(express.json());
 // listen to the port
@@ -27,6 +28,6 @@ app.listen(port, () => {
 })
 
 // using routes
-app.use("/api", categoryRoute);
+app.use("/api", categoryRoute)
 app.use("/api", productRoute)
 
