@@ -9,14 +9,26 @@ export const createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
 
+    const existingCategory = await Category.findOne({
+      name: name
+    });
+
+    if (existingCategory) {
+      return res.status(400).json({
+        error: "Category must be unique"
+      });
+    }
+
     const category = await Category.create({
       name,
-      description,
+      description
     });
+
     res.status(201).json(category);
+
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      message: error.message
     });
   }
 };
