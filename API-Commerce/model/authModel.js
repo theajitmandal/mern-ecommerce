@@ -1,77 +1,79 @@
 import mongoose from "mongoose";
-import uuidv1 from "uuidv1";
+import { v1 as uuidv1 } from "uuid";
 import crypto from "crypto";
 
 const authSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-      lowercase: true
-    },
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true
+        },
 
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true
-    },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            lowercase: true
+        },
 
-    password: {
-      type: String,
-      required: true,
-      minlength: 6
-    },
+        hashed_password: {
+            type: String,
+            required: true
+        },
 
-    role: {
-      type: Number,
-      default: 0
-    },
+        salt: {
+            type: String,
+            required: true
+        },
 
-    hashed_password: {
-        type: String,
-        required: true
-    },
+        role: {
+            type: Number,
+            default: 0
+        },
 
-    salt: String,
-    isVerified: {
-        type: Boolean,
-        default: false
+        isVerified: {
+            type: Boolean,
+            default: false
+        }
+    },
+    {
+        timestamps: true
     }
-  },
-  {
-    timestamps: true
-  }
 );
 
-// virtual fields
-authSchema.virtual('password')
-.set(function(password){
-    this._password = password
-    this.salt = uuidv1()
-    this.hashed_password = this.encryptPassword(password) //encryptPassword is not pre-defined, we will define later
-})
-.get(function(){
-    return this._password = password
-})
+// Virtual password field
+authSchema
+    .virtual("password")
+    .set(function (password) {
+        this._password = password;
+        this.salt = uuidv1();
+        this.hashed_password = this.encryptPassword(password);
+    })
+    .get(function () {
+        return this._password;
+    });
 
-// defining methods
-authSchema.methods = {
-    encryptPassword: function(password){
-        if(!password) return ''
+// Encrypt password
+authSchema.methods.encryptPassword = function (password) {
+    if (!password) return "";
 
-        try{
-
-        }catch(err){
-            return ''
-        }
+    try {
+        return crypto
+            .createHmac("sha1", this.salt)
+            .update(password)
+            .digest("hex");
+    } catch (error) {
+        return "";
     }
-}
+};
 
+// Authenticate password
+authSchema.methods.authenticate = function (password) {
+    return this.encryptPassword(password) === this.hashed_password;
+};
 
-const Auth = mongoose.model("Auth", authSchema);
+const User = mongoose.model("User", authSchema);
 
-export default Auth;
-
+export default User;
