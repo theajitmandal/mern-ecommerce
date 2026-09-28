@@ -60,26 +60,51 @@ Thank you.`
     }
 };
 
-// confirming email
+// Confirming email
 export const postEmailConfirmation = async (req, res) => {
-    // at first find the valid or matching token
-    Token.findOne({ token: req.params.token }, (error, token) => {
-        if (error || !token) {
-            return res.status(400).json({ error: 'invalid token or token may have expired' })
-        }
-        // if we found the valid token then find the valid user
-        User.findOne({ _id: token.userId }, (error, user) => {
-            if (error || !user) {
-                return res.status(400).json({ error: 'We are unable to find the valid user for this token' })
-            }
-            // check if user is already verified or not
-            if (user.isVerified) {
-                return res.status(400).json({ error: 'Email is already verified, login to continue' })
-            }
-            // save the verified user
-            user.isVerified = true
-            user.save((error))
+    try {
+        // Find the verification token
+        const token = await Token.findOne({
+            token: req.params.token
+        });
 
-        })
-    })
-}
+        if (!token) {
+            return res.status(400).json({
+                error: "Invalid token or token may have expired"
+            });
+        }
+
+        // Find the user associated with the token
+        const user = await User.findById(token.userId);
+
+        if (!user) {
+            return res.status(400).json({
+                error: "We are unable to find the user for this token"
+            });
+        }
+
+        // Check if email is already verified
+        if (user.isVerified) {
+            return res.status(400).json({
+                error: "Email is already verified, login to continue"
+            });
+        }
+
+        // Verify the user's email
+        user.isVerified = true;
+
+        await user.save();
+
+        // Delete the used verification token
+        await Token.findByIdAndDelete(token._id);
+
+        res.status(200).json({
+            message: "Congrats, your account has been verified"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
