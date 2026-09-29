@@ -108,3 +108,65 @@ export const postEmailConfirmation = async (req, res) => {
         });
     }
 };
+
+// Sign in user
+export const userLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Find user
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({
+                error: "Invalid email or password"
+            });
+        }
+
+        // Check email verification
+        if (!user.isVerified) {
+            return res.status(403).json({
+                error: "Please verify your email before signing in"
+            });
+        }
+
+        // Check password
+        const isValidPassword = user.authenticate(password);
+
+        if (!isValidPassword) {
+            return res.status(401).json({
+                error: "Invalid email or password"
+            });
+        }
+
+        // Generate JWT
+        const token = jwt.sign(
+            {
+                id: user._id,
+                role: user.role
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1d"
+            }
+        );
+
+        // Send response
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                isVerified: user.isVerified
+            }
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        });
+    }
+};
