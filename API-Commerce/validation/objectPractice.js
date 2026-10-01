@@ -24,3 +24,29 @@ const person2 = {
 
 // Add Properties
 let text = person.name + "," + person.age + "," + person.city;
+
+
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 50,
+  fullName: function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
+const person5 = {
+  name: "John",
+  hello: function() {
+    return "Hello " + this.name;
+  }
+};
+
+const person8 = {
+  name: "Anna",
+  hello: function() {
+    return "Hello " + this.name;
+  }
+};
+
+document.getElementById("demo").innerHTML = person1.hello();

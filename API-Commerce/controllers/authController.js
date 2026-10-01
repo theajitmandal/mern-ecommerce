@@ -2,6 +2,7 @@ import User from "../model/authModel.js";
 import Token from "../model/tokenModel.js";
 import sendEmail from "../utils/setEmail.js";
 import crypto from "crypto";
+import jwt from "jsonwebtoken";
 
 export const userRegister = async (req, res) => {
     try {
