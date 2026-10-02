@@ -120,7 +120,7 @@ export const userLogin = async (req, res) => {
         // email = req.body.email
         // password = req.body.password
 
-        // Find user
+        // Find user at first
         const user = await User.findOne({ email });
 
         if (!user) {
@@ -145,7 +145,7 @@ export const userLogin = async (req, res) => {
             });
         }
 
-        // Generate JWT
+        // Generate JWT token with user id and jwt secret
         const token = jwt.sign(
             {
                 id: user._id,
@@ -157,6 +157,10 @@ export const userLogin = async (req, res) => {
             }
         );
 
+        // store token in the cookie
+        res.cookie('myCookie', token, {expire: Date.now()+999999})
+
+        // return user information to frontend
         // Send response
         res.status(200).json({
             message: "Login successful",

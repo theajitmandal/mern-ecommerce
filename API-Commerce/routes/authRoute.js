@@ -5,10 +5,6 @@ import { postEmailConfirmation, userRegister } from "../controllers/authControll
 
 router.post("/register", userRegister)
 router.post("/confirmation/:token", postEmailConfirmation)
-
-router.post(
-    "/login",
-    userLogin
-);
+router.post("/login", userLogin);
 
 export default router;
