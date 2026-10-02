@@ -8,6 +8,7 @@ import authRoute from "./routes/authRoute.js";
 
 import bodyParser from "body-parser"
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -33,4 +34,6 @@ app.listen(port, () => {
 app.use("/api", categoryRoute)
 app.use("/api", productRoute)
 app.use("/api", authRoute)
+
+app.use(cookieParser())
 

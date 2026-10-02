@@ -2,7 +2,6 @@ import User from "../model/authModel.js";
 import Token from "../model/tokenModel.js";
 import sendEmail from "../utils/setEmail.js";
 import crypto from "crypto";
-import jwt from "jsonwebtoken";
 
 export const userRegister = async (req, res) => {
     try {
@@ -110,10 +109,16 @@ export const postEmailConfirmation = async (req, res) => {
     }
 };
 
+// login process
+import jwt from "jsonwebtoken";             // authentication
+import expressJwt from "express-jwt";       // authorization
+
 // Sign in user
 export const userLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
+        // email = req.body.email
+        // password = req.body.password
 
         // Find user
         const user = await User.findOne({ email });
