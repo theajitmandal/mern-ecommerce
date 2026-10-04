@@ -8,6 +8,17 @@ import expressJwt from "express-jwt";       // authorization
 
 export const userRegister = async (req, res) => {
     try {
+        // Check if user already exists
+        const existingUser = await User.findOne({
+            email: req.body.email
+        });
+
+        if (existingUser) {
+            return res.status(400).json({
+                error: "Email already registered"
+            });
+        }
+
         // Create user
         const user = new User({
             name: req.body.name,
@@ -62,6 +73,7 @@ Thank you.`
         });
     }
 };
+
 
 // Confirming email
 export const postEmailConfirmation = async (req, res) => {
