@@ -285,3 +285,9 @@ export const resetPassword = async (req, res) => {
         });
     }
 };
+
+// signout
+export const signout = async (req, res) => {
+    res.clearCookie('myCookie')
+    res.json({message: 'Signout Successfully'})
+}
