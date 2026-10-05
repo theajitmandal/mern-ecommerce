@@ -308,3 +308,13 @@ export const userList = async (req, res) => {
     });
   }
 }
+
+// user details
+// to show category details
+export const userInfo = async (req, res) => {
+  const user = await User.findById(req.params.id).select('-hashed_password')
+  if (!user) {
+    return res.status(400).json({ error: 'Something went wrong' })
+  }
+  res.send(user)
+}
