@@ -291,3 +291,20 @@ export const signout = async (req, res) => {
     res.clearCookie('myCookie')
     res.json({message: 'Signout Successfully'})
 }
+
+// to show all users list
+export const userList = async (req, res) => {
+  try {
+    // .select('-hashed_password') -> doesnot show hashed_password
+    const user = await User.find().select('-hashed_password')
+    if (!user) {
+      return res.status(400).json({ error: 'Something went wrong' })
+    }
+    res.send(user)
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+}
