@@ -50,3 +50,24 @@ const person8 = {
 };
 
 document.getElementById("demo").innerHTML = person1.hello();
+
+
+
+let products = ["Laptop", "Mouse", "Keyboard"];
+
+products.forEach(product => {
+    console.log(product);
+});
+
+
+let highestStock = products[0];
+
+products.forEach(product => {
+    if (product.stock > highestStock.stock) {
+        highestStock = product;
+    }
+});
+
+console.log(highestStock);
+
+
