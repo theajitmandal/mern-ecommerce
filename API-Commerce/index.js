@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 
@@ -36,4 +37,5 @@ app.use("/api", productRoute)
 app.use("/api", authRoute)
 
 app.use(cookieParser())
+
 

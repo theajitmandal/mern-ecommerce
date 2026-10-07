@@ -4,7 +4,7 @@ import sendEmail from "../utils/setEmail.js";
 import crypto from "crypto";
 // for login process
 import jwt from "jsonwebtoken";             // authentication
-import expressJwt from "express-jwt";       // authorization
+import { expressjwt } from "express-jwt";       // authorization
 
 export const userRegister = async (req, res) => {
     try {
@@ -318,3 +318,21 @@ export const userInfo = async (req, res) => {
   }
   res.send(user)
 }
+
+// authentication
+// authorization - like to see user list, to add, update, delete category and products, login is necessary
+
+// require signin
+// route is not needed for this, just we will use it on already made route
+// export const requireSignin = expressJwt({
+//     secret: process.env.JWT_SECRET,
+//     algorithms: ['HS256'],
+//     userProperty: 'auth'
+// })
+
+export const requireSignin = expressjwt({
+    secret: process.env.JWT_SECRET,
+    algorithms: ["HS256"],
+    requestProperty: "auth"
+});
+
