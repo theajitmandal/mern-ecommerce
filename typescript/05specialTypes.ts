@@ -1,46 +1,55 @@
 /*
+  *** TypeScript Special Types ***
+
+    TypeScript includes several special types that have specific behaviors in the type system.
+
+    These types are used in various scenarios to handle cases where the type might not be known
+    in advance or when you need to work with JavaScript primitives in a type-safe way.
+
+    Note: These special types are part of TypeScript's type system and help make your code more 
+    type-safe and self-documenting.
+
+  *** Type: any ***
+    The any type is the most flexible type in TypeScript.
+    It essentially tells the compiler to skip type checking for a particular variable.
+
+    While this can be useful in certain situations, it should be used sparingly as it bypasses 
+    TypeScript's type safety features.
+
+    When to use any:
+      When migrating JavaScript code to TypeScript
+      When working with dynamic content where the type is unknown
+      When you need to opt out of type checking for a specific case
+
+    The example below does not use any and will throw an error:
+
+    Example without any:
+      let u = true;
+      u = "string"; // Error: Type 'string' is not assignable to type 'boolean'.
+      Math.round(u); // Error: Argument of type 'boolean' is not assignable to parameter of type 'number'.
+
+    Setting a variable to the special type any disables type checking:
+
+    Example with any:
+      let v: any = true;
+      v = "string"; // no error as it can be "any" type
+      Math.round(v); // no error as it can be "any" type
+
+    any can be a useful way to get past errors since it disables type checking, but TypeScript will not 
+    be able to provide type safety, and tools which rely on type data, such as auto completion, will not work.
+
+    Remember, it should be avoided at "any" cost...
 
 */
 
-TypeScript Special Types
-TypeScript includes several special types that have specific behaviors in the type system.
-
-These types are used in various scenarios to handle cases where the type might not be known in advance or when you need to work with JavaScript primitives in a type-safe way.
-
-Note: These special types are part of TypeScript's type system and help make your code more type-safe and self-documenting.
-
-Share
 
 
 
-Link Copied
-Type: any
-The any type is the most flexible type in TypeScript.
 
-It essentially tells the compiler to skip type checking for a particular variable.
 
-While this can be useful in certain situations, it should be used sparingly as it bypasses TypeScript's type safety features.
 
-When to use any:
 
-When migrating JavaScript code to TypeScript
-When working with dynamic content where the type is unknown
-When you need to opt out of type checking for a specific case
-The example below does not use any and will throw an error:
 
-Example without anyGet your own TypeScript Server
-let u = true;
-u = "string"; // Error: Type 'string' is not assignable to type 'boolean'.
-Math.round(u); // Error: Argument of type 'boolean' is not assignable to parameter of type 'number'.
-Setting a variable to the special type any disables type checking:
-
-Example with any
-let v: any = true;
-v = "string"; // no error as it can be "any" type
-Math.round(v); // no error as it can be "any" type
-any can be a useful way to get past errors since it disables type checking, but TypeScript will not be able to provide type safety, and tools which rely on type data, such as auto completion, will not work.
-
-Remember, it should be avoided at "any" cost...
 
 REMOVE ADS
 
