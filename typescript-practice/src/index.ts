@@ -70,14 +70,21 @@ const graph: [x: number, y: number] = [55.2, 41.3];
 const graph: [number, number] = [55.2, 41.3];
 const [x, y] = graph;
 
-const car: { type: string, model: string, year: number } = {
+const car2: { type: string, model: string, year: number } = {
   type: "Toyota",
   model: "Corolla",
   year: 2009
 };
 
-const car = {
+const car3 = {
   type: "Toyota",
 };
-car.type = "Ford"; // no error
-car.type = 2; // Error: Type 'number' is not assignable to type 'string'.
+car3.type = "Ford"; // no error
+car3.type = 2; // Error: Type 'number' is not assignable to type 'string'.
+
+
+const car1 = {
+  type: "Toyota",
+};
+car1.type = "Ford"; // no error
+car1.type = 2; // Error: Type 'number' is not assignable to type 'string'.
