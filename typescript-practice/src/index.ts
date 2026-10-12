@@ -64,3 +64,20 @@ const numbers = [1, 2, 3]; // inferred to type number[]
 numbers.push(4); // no error
 numbers.push("2"); // Error: Argument of type 'string' is not assignable to parameter of type 'number'.
 let head: number = numbers[0]; // no error
+
+const graph: [x: number, y: number] = [55.2, 41.3];
+
+const graph: [number, number] = [55.2, 41.3];
+const [x, y] = graph;
+
+const car: { type: string, model: string, year: number } = {
+  type: "Toyota",
+  model: "Corolla",
+  year: 2009
+};
+
+const car = {
+  type: "Toyota",
+};
+car.type = "Ford"; // no error
+car.type = 2; // Error: Type 'number' is not assignable to type 'string'.
