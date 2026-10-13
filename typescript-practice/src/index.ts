@@ -56,35 +56,58 @@
 
 // let x: never = true; // Error: Type 'boolean' is not assignable to type 'never'.
 
-const names: string[] = [];
-names.push("Dylan"); // no error
-// names.push(3); // Error: Argument of type 'number' is not assignable to parameter of type 'string'.
+// const names: string[] = [];
+// names.push("Dylan"); // no error
+// // names.push(3); // Error: Argument of type 'number' is not assignable to parameter of type 'string'.
 
-const numbers = [1, 2, 3]; // inferred to type number[]
-numbers.push(4); // no error
-numbers.push("2"); // Error: Argument of type 'string' is not assignable to parameter of type 'number'.
-let head: number = numbers[0]; // no error
+// const numbers = [1, 2, 3]; // inferred to type number[]
+// numbers.push(4); // no error
+// numbers.push("2"); // Error: Argument of type 'string' is not assignable to parameter of type 'number'.
+// let head: number = numbers[0]; // no error
 
-const graph: [x: number, y: number] = [55.2, 41.3];
+// const graph: [x: number, y: number] = [55.2, 41.3];
 
-const graph: [number, number] = [55.2, 41.3];
-const [x, y] = graph;
+// const graph: [number, number] = [55.2, 41.3];
+// const [x, y] = graph;
 
-const car2: { type: string, model: string, year: number } = {
-  type: "Toyota",
-  model: "Corolla",
-  year: 2009
+// const car2: { type: string, model: string, year: number } = {
+//   type: "Toyota",
+//   model: "Corolla",
+//   year: 2009
+// };
+
+// const car3 = {
+//   type: "Toyota",
+// };
+// car3.type = "Ford"; // no error
+// car3.type = 2; // Error: Type 'number' is not assignable to type 'string'.
+
+
+// const car1 = {
+//   type: "Toyota",
+// };
+// car1.type = "Ford"; // no error
+// car1.type = 2; // Error: Type 'number' is not assignable to type 'string'.
+
+// enum CardinalDirections {
+//                 North,
+//                 East,
+//                 South,
+//                 West
+// };
+                        
+// let currentDirection = CardinalDirections.North;
+
+// North is the first value so it logs '0'
+// console.log(currentDirection);
+
+enum CardinalDirections {
+                North=1,
+                East,
+                South,
+                West
 };
+                        
+let currentDirection = CardinalDirections.East;
 
-const car3 = {
-  type: "Toyota",
-};
-car3.type = "Ford"; // no error
-car3.type = 2; // Error: Type 'number' is not assignable to type 'string'.
-
-
-const car1 = {
-  type: "Toyota",
-};
-car1.type = "Ford"; // no error
-car1.type = 2; // Error: Type 'number' is not assignable to type 'string'.
+console.log(currentDirection);
