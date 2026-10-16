@@ -6,6 +6,7 @@ import connectDB from "./config/db.js";
 import categoryRoute from "./routes/categoryRoute.js";
 import productRoute from "./routes/productRoute.js";
 import authRoute from "./routes/authRoute.js";
+import orderRoute from "./routes/orderRoute.js"
 
 import bodyParser from "body-parser"
 import morgan from "morgan";
@@ -35,6 +36,7 @@ app.listen(port, () => {
 app.use("/api", categoryRoute)
 app.use("/api", productRoute)
 app.use("/api", authRoute)
+app.use("/api", orderRoute)
 
 app.use(cookieParser())
 
