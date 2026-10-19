@@ -101,13 +101,22 @@
 // North is the first value so it logs '0'
 // console.log(currentDirection);
 
-enum CardinalDirections {
-                North=1,
-                East,
-                South,
-                West
-};
+// enum CardinalDirections {
+//                 North=1,
+//                 East,
+//                 South,
+//                 West
+// };
                         
-let currentDirection = CardinalDirections.East;
+// let currentDirection = CardinalDirections.East;
 
-console.log(currentDirection);
+// console.log(currentDirection);
+
+let ourTuple: [number, boolean, string];
+
+ourTuple = [5, false, 'Coding God was here'];
+
+let ourTuple: [number, boolean, string];
+ourTuple = [5, false, 'Coding God was here'];
+ourTuple.push('Something new and wrong');
+console.log(ourTuple);
