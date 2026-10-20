@@ -120,3 +120,47 @@ let ourTuple: [number, boolean, string];
 ourTuple = [5, false, 'Coding God was here'];
 ourTuple.push('Something new and wrong');
 console.log(ourTuple);
+
+let value: string | undefined | null = null;
+value = 'hello';
+value = undefined;
+
+interface House {
+  sqft: number;
+  yard?: {
+    sqft: number;
+  };
+}
+function printYardSize(house: House) {
+  const yardSize = house.yard?.sqft;
+  if (yardSize === undefined) {
+    console.log('No yard');
+  } else {
+    console.log(`Yard is ${yardSize} sqft`);
+  }
+}
+
+let home: House = {
+  sqft: 500
+};
+
+printYardSize(home); // Prints 'No yard'
+
+// Convert all properties to boolean
+type Flags<T> = {
+  [K in keyof T]: boolean;
+};
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+type UserFlags = Flags<User>;
+// Equivalent to:
+// {
+//   id: boolean;
+//   name: boolean;
+//   email: boolean;
+// }
