@@ -164,3 +164,26 @@ type UserFlags = Flags<User>;
 //   name: boolean;
 //   email: boolean;
 // }
+
+type IsString<T> = T extends string ? true : false;
+
+// Usage examples
+type Result1 = IsString<string>; // true
+type Result2 = IsString<number>; // false
+type Result3 = IsString<"hello">; // true (literal types extend their base types)
+
+// We can use this with variables too
+let a: IsString<string>; // a has type 'true'
+let b: IsString<number>; // b has type 'false'
+
+type ToArray<T> = T extends any ? T[] : never;
+
+// When used with a union type, it applies to each member of the union
+type StringOrNumberArray = ToArray<string | number>;
+// This becomes ToArray<string> | ToArray<number>
+// Which becomes string[] | number[]
+
+// We can also extract specific types from a union
+type ExtractString<T> = T extends string ? T : never;
+type StringsOnly = ExtractString<string | number | boolean | "hello">;
+// Result: string | "hello"

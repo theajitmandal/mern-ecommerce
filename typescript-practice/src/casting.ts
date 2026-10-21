@@ -38,3 +38,19 @@ To override type errors that TypeScript may throw when casting, first cast to un
 Example
 let x = 'hello';
 console.log(((x as unknown) as number).length); // x is not actually a number so this will return undefined
+
+// conditional types
+// Extract the return type of a function type
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
+
+// Examples
+function greet() { return "Hello, world!"; }
+function getNumber() { return 42; }
+
+type GreetReturnType = ReturnType<typeof greet>; // string
+type NumberReturnType = ReturnType<typeof getNumber>; // number
+
+// Extract element type from array
+type ElementType<T> = T extends (infer U)[] ? U : never;
+type NumberArrayElement = ElementType<number[]>; // number
+type StringArrayElement = ElementType<string[]>; // string
