@@ -74,3 +74,9 @@ type StringMap = { [key: string]: unknown };
 function createStringPair(property: keyof StringMap, value: string): StringMap {
   return { [property]: value };
 }
+
+let z: unknown = 'hello';
+console.log((<string>z).length);
+
+let p = 'hello';
+console.log(((p as unknown) as number).length); // x is not actually a number so this will return undefined
