@@ -228,3 +228,106 @@ function validateUser(user: any) {
     throw new ValidationError('Invalid email format', 'email');
   }
 }
+
+// Create a typed Promise that resolves to a string
+const fetchGreeting = (): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const success = Math.random() > 0.5;
+      if (success) {
+        resolve("Hello, TypeScript!");
+      } else {
+        reject(new Error("Failed to fetch greeting"));
+      }
+    }, 1000);
+  });
+};
+
+// Using the Promise with proper type inference
+fetchGreeting()
+  .then((greeting) => {
+    // TypeScript knows 'greeting' is a string
+    console.log(greeting.toUpperCase());
+  })
+  .catch((error: Error) => {
+    console.error("Error:", error.message);
+  });
+
+  // Define types for our API response
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'guest';
+}
+
+// Function that returns a Promise of User array
+async function fetchUsers(): Promise<User[]> {
+  console.log('Fetching users...');
+  // Simulate API call
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return [
+    { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' },
+    { id: 2, name: 'Bob', email: 'bob@example.com', role: 'user' }
+  ];
+}
+
+// Async function to process users
+async function processUsers() {
+  try {
+    // TypeScript knows users is User[]
+    const users = await fetchUsers();
+    console.log(`Fetched ${users.length} users`);
+
+    // Type-safe property access
+    const adminEmails = users
+      .filter(user => user.role === 'admin')
+      .map(user => user.email);
+
+    console.log('Admin emails:', adminEmails);
+    return users;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error('Failed to process users:', error.message);
+    } else {
+      console.error('An unknown error occurred');
+    }
+    throw error; // Re-throw to let caller handle
+  }
+}
+
+// Execute the async function
+processUsers()
+  .then(users => console.log('Processing complete'))
+  .catch(err => console.error('Processing failed:', err));
+
+  interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+async function fetchProduct(id: number): Promise<Product> {
+  console.log(`Fetching product ${id}...`);
+  await new Promise(resolve => setTimeout(resolve, Math.random() * 1000));
+  return { id, name: `Product ${id}`, price: Math.floor(Math.random() * 100) };
+}
+
+async function fetchMultipleProducts() {
+  try {
+    // Start all fetches in parallel
+    const [product1, product2, product3] = await Promise.all([
+      fetchProduct(1),
+      fetchProduct(2),
+      fetchProduct(3)
+    ]);
+
+    const total = [product1, product2, product3]
+      .reduce((sum, product) => sum + product.price, 0);
+    console.log(`Total price: $${total.toFixed(2)}`);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+  }
+}
+
+fetchMultipleProducts();
